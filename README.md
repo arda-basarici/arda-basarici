@@ -18,7 +18,7 @@ that failed.
 - **Test explanations, not just models.** A conclusion is earned by the controlled
   experiment that could have falsified it.
 - **Negative results are findings.** My strongest published result is a demonstration of
-  *why* learning fails on a problem — reported as the finding it is.
+  _why_ learning fails on a problem — reported as the finding it is.
 - **Reproducible by construction.** Experiments carry their config, seed, and code
   version — enough context to rerun and independently verify a finding.
 - **Complexity must earn its place.** The right tool for the question — no framework,
@@ -35,11 +35,11 @@ each; the write-ups carry the full story:
 
 - **[blackjack-rl](https://github.com/arda-basarici/blackjack-rl)** — can RL rediscover
   provably-optimal decisions? The capstone inverts: the learned bettor never finds Kelly,
-  and the project *proves why* — the edge is real but sits below the noise it must be
+  and the project _proves why_ — the edge is real but sits below the noise it must be
   learned from. Structure beats end-to-end learning on a sub-noise signal.
 - **[steam-reviews](https://github.com/arda-basarici/steam-reviews)** — what does "85%
   positive" measure? A resumable data pipeline (298k reviews, 30 languages, contract-
-  validated) and four findings forced to reproduce *inside individual games* — plus a
+  validated) and four findings forced to reproduce _inside individual games_ — plus a
   chapter on the claims the data refused to support.
 - **[pathfinding-ml](https://github.com/arda-basarici/pathfinding-ml)** — a learned A\*
   heuristic beats Manhattan (~17% fewer nodes, ~0.2% optimality gap), found on the far side
@@ -56,4 +56,4 @@ Every project ships with a technical report and full design/architecture documen
 ## Current focus
 
 **AI engineering** — building AI systems end to end: design, orchestration, and above all
-*measuring what they actually do*. Built publicly, like everything above.
+_measuring what they actually do_. Built publicly, like everything above.
