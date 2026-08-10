@@ -51,7 +51,7 @@ each; the write-ups carry the full story:
 
 Every project ships with a technical report and full design/architecture documentation.
 
-📄 **Write-ups, reports & code:** [arda-basarici.github.io](https://arda-basarici.github.io)
+📄 **Write-ups, reports & code:** [ardabasarici.dev](https://ardabasarici.dev)
 
 ## Current focus
 
