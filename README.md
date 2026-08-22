@@ -1,59 +1,88 @@
 # Arda Başarıcı
 
-Software engineer with a mathematics background, moving into **AI / ML engineering**.
-I spent the past several years shipping production software — 25+ released games, real
-users, real deadlines — and I bring that discipline to building AI systems: architecture
-that stays maintainable, tests that make meaningful claims, and results that can be
-regenerated from a seed.
+**AI engineer — LLM systems, evaluation-first.** Mathematics background, ~3 years
+shipping production games (20+ released titles), now building LLM systems that can
+state how well they work: deterministic wherever a model isn't needed, measured
+against ground truth wherever one is, and open about the error that remains.
 
-Rather than treating projects as demonstrations of tools, I treat them as **engineering
-investigations**: a concrete question, strong baselines, controlled experiments, and a
-technical report that explains not only what worked, but why — including the hypotheses
-that failed.
+More about me: [ardabasarici.dev/about](https://ardabasarici.dev/about/) · reports &
+write-ups: [ardabasarici.dev](https://ardabasarici.dev) ·
+[LinkedIn](https://www.linkedin.com/in/ardabasarici)
 
-## How I work
+---
 
-- **Measurement before optimization.** A number with no baseline and no error bar isn't a
-  result yet.
-- **Test explanations, not just models.** A conclusion is earned by the controlled
-  experiment that could have falsified it.
-- **Negative results are findings.** My strongest published result is a demonstration of
-  _why_ learning fails on a problem — reported as the finding it is.
-- **Reproducible by construction.** Experiments carry their config, seed, and code
-  version — enough context to rerun and independently verify a finding.
-- **Complexity must earn its place.** The right tool for the question — no framework,
-  layer, or model added unless it demonstrably buys something.
+## SteamLens — a live LLM product that publishes its own error rate
 
-None of this is specific to one model family. Evaluation discipline is the same job whether
-the system under test is a Q-table, a gradient-boosted tree, or an LLM pipeline — which is
-exactly where I'm taking it (see below).
+Type a game name, watch an AI investigate its Steam reviews, get a report where every
+claim carries its quoted evidence — and the product cites its own measured accuracy.
 
-## The work so far — the evidence
+**Live:** [steamlens.ardabasarici.dev](https://steamlens.ardabasarici.dev) ·
+**Repo:** [steam-lens](https://github.com/arda-basarici/steam-lens)
 
-My public work to date spans simulation, data engineering, and machine learning. One line
-each; the write-ups carry the full story:
+- **Evaluation:** the production labeller measured against a human-adjudicated
+  250-review gold set, labelled before any model output existed — **F1 0.766
+  (95% CI 0.713–0.811)**; a cross-family LLM judge, calibrated on the same gold set,
+  extends the check beyond it.
+- **Grounding:** quote and numeral verification before anything publishes —
+  **0 non-verbatim quotes among 163,842 stored evidence spans**; residual attribution
+  error measured (11.6%) and disclosed inside the product.
+- **Production, solo:** a 135,260-review census labelled for $3.80 · CI evaluation
+  gates · approval-gated deploys with rollback · per-report spend admission · public
+  ops dashboard · 746 tests.
 
-- **[blackjack-rl](https://github.com/arda-basarici/blackjack-rl)** — can RL rediscover
-  provably-optimal decisions? The capstone inverts: the learned bettor never finds Kelly,
-  and the project _proves why_ — the edge is real but sits below the noise it must be
-  learned from. Structure beats end-to-end learning on a sub-noise signal.
-- **[steam-reviews](https://github.com/arda-basarici/steam-reviews)** — what does "85%
-  positive" measure? A resumable data pipeline (298k reviews, 30 languages, contract-
-  validated) and four findings forced to reproduce _inside individual games_ — plus a
-  chapter on the claims the data refused to support.
-- **[pathfinding-ml](https://github.com/arda-basarici/pathfinding-ml)** — a learned A\*
-  heuristic beats Manhattan (~17% fewer nodes, ~0.2% optimality gap), found on the far side
-  of a Simpson's reversal. The real lesson: the training distribution governs the outcome,
-  not the model.
-- **[blackjack-sim](https://github.com/arda-basarici/blackjack-sim)** — the from-scratch,
-  self-validating Monte Carlo engine the RL work audits against (~90M hands, validated on
-  the published house edge).
+**Covers:** LLM evaluation · grounding / hallucination control · production deployment & ops
+**Stack:** Python, FastAPI, SQLite, multi-provider LLM APIs, Docker/GHCR, GitHub Actions, Cloudflare
 
-Every project ships with a technical report and full design/architecture documentation.
+---
 
-📄 **Write-ups, reports & code:** [ardabasarici.dev](https://ardabasarici.dev)
+## The investigations behind it
 
-## Current focus
+Four earlier projects, each a concrete question answered in a written technical report.
+The evaluation discipline is the same across all of them; only the system under test
+changes.
 
-**AI engineering** — building AI systems end to end: design, orchestration, and above all
-_measuring what they actually do_. Built publicly, like everything above.
+### [blackjack-rl](https://github.com/arda-basarici/blackjack-rl) — can RL rediscover provably-optimal decisions?
+
+A tabular agent audited against provable basic strategy (~93% of cells rediscovered,
+residual traced), a DQN on the same task (~82–92% across seeds, gap isolated by
+ablation) — and a bet-sizer that never finds Kelly, with the *why* proven by two
+controlled experiments. The negative result is the published finding.
+
+**Covers:** reinforcement learning · experiment design & falsification · reproducibility
+**Stack:** Python, PyTorch, NumPy
+
+### [pathfinding-ml](https://github.com/arda-basarici/pathfinding-ml) — can a learned heuristic beat Manhattan distance?
+
+A gradient-boosted cost-to-go heuristic: 17.3% fewer node expansions at a 0.2% mean
+optimality gap on held-out mazes — found on the far side of a Simpson's reversal that
+made the pooled result look like a wash. Training-distribution composition, not the
+model, governs the outcome.
+
+**Covers:** supervised ML · leakage-safe evaluation · confound detection & distribution shift
+**Stack:** Python, scikit-learn, NumPy
+
+### [steam-reviews](https://github.com/arda-basarici/steam-reviews) — what does "85% positive" actually measure?
+
+A resumable pipeline (298,553 reviews, 30 languages, schema contracts gating every
+promotion) and four findings each required to reproduce inside individual games — one
+42-point pooled effect failed that bar and is reported as a discard.
+
+**Covers:** data pipeline engineering · schema contracts · within-group statistical confirmation
+**Stack:** Python, pandas, Parquet, pandera, scipy
+
+### [blackjack-sim](https://github.com/arda-basarici/blackjack-sim) — the validated foundation
+
+The from-scratch Monte Carlo engine the RL work audits against: ~90M hands, validated
+on the published 0.45% house edge before anything was built on it.
+
+**Covers:** simulation · validation against known ground truth
+**Stack:** Python, NumPy
+
+---
+
+## Currently building
+
+An agent system whose world is constructed so its answers can be checked: real
+organizational tools (HRMS, issue tracker, calendar) populated by a synthetic-org
+generator that doubles as the golden-dataset generator — every scenario ships with its
+answer key, so the agent's investigation is graded, not admired. Public as it grows.
