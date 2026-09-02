@@ -2,8 +2,8 @@
 
 **AI engineer — LLM systems, evaluation-first.** Mathematics background, ~3 years
 shipping production games (20+ released titles), now building LLM systems that can
-state how well they work: deterministic wherever a model isn't needed, measured
-against ground truth wherever one is, and open about the error that remains.
+state how well they work: deterministic where a model isn't needed, measured
+against ground truth where one is, and open about the error that remains.
 
 More about me: [ardabasarici.dev/about](https://ardabasarici.dev/about/) · reports &
 write-ups: [ardabasarici.dev](https://ardabasarici.dev) ·
@@ -32,6 +32,35 @@ claim carries its quoted evidence and the product cites its own measured accurac
 
 **Covers:** LLM evaluation · grounding / hallucination control · production deployment & ops
 **Stack:** Python, FastAPI, SQLite, multi-provider LLM APIs, Docker/GHCR, GitHub Actions, Cloudflare
+
+---
+
+## platform — how the projects are operated
+
+The layer under SteamLens and the leave-impact agent: one Cloudflare edge, a VPS and an
+AWS host, and the wiring that joins each application to them. It appeared when a second
+tenant landed on the same box and its ingress change became a commit in the SteamLens
+repository; the shared layer was extracted into its own repository and brought under
+code.
+
+**Repo:** [platform](https://github.com/arda-basarici/platform) ·
+**Best single read:** the [rebuild-and-restore runbook](https://github.com/arda-basarici/platform/blob/main/runbooks/box-rebuild.md)
+
+- **Infrastructure as code, adopted on zero-diff plans:** every DNS record of the zone and
+  its deliberately set edge settings and security rules, and every AWS resource under the
+  agent, in Terraform; the VPS rebuildable from a blank host by a five-role Ansible play
+  with an acceptance script.
+- **Recovery proven, not asserted:** a rebuild-and-restore drill from a blank host and a
+  blank control node to SteamLens serving restored production data in **about an hour**;
+  a monthly automated restore check; the alarm path verified by forcing the alarm, which
+  found and fixed a silent SNS policy refusal.
+- **Secrets by policy:** the store follows workload identity (SSM, SOPS + age, OIDC);
+  production secret values kept out of Terraform state with a state-pull proof; every SOPS
+  file also encrypted to a recovery identity whose private key lives in the password vault,
+  so losing the workstation loses no secret.
+
+**Covers:** infrastructure as code · operations & recovery · secrets handling
+**Stack:** Terraform, Ansible, Cloudflare, AWS (EC2, SSM, IAM OIDC, CloudWatch), Caddy, Docker, SOPS/age
 
 ---
 
@@ -82,8 +111,7 @@ on the published 0.45% house edge before anything was built on it.
 
 ## Currently building
 
-An agent system whose world is constructed so its answers can be checked: real
-organizational tools (HRMS, issue tracker, calendar) populated by a synthetic-org
-generator that doubles as the golden-dataset generator. Every scenario ships with its
-answer key, so the agent's investigation is graded against known answers. Public as
-it grows.
+An agent system whose world is constructed so its answers can be checked: built around
+real organizational tools, an HR system first, with issue tracking and calendars to
+follow, populated from synthetic scenarios that also produce the sealed answer key each
+one is graded against. Ground truth by construction. Public as it grows.
