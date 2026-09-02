@@ -20,15 +20,15 @@ claim carries its quoted evidence and the product cites its own measured accurac
 **Repo:** [steam-lens](https://github.com/arda-basarici/steam-lens)
 
 - **Evaluation:** the production labeller measured against a human-adjudicated
-  250-review gold set, labelled before any model output existed: **F1 0.766
+  250-review gold set (assist-model drafts, every label ruled by hand before any candidate model was scored): **F1 0.766
   (95% CI 0.713–0.811)**; a cross-family LLM judge, calibrated on the same gold set,
   extends the check beyond it.
-- **Grounding:** quote and numeral verification before anything publishes:
+- **Grounding:** quotes verbatim-checked at write time and numerals at compose time:
   **0 non-verbatim quotes among 163,842 stored evidence spans**; residual attribution
   error measured (11.6%) and disclosed inside the product.
 - **Production, solo:** a 135,260-review census labelled for $3.80 · CI evaluation
   gates · approval-gated deploys with rollback · per-report spend admission · public
-  ops dashboard · 746 tests.
+  ops dashboard.
 
 **Covers:** LLM evaluation · grounding / hallucination control · production deployment & ops
 **Stack:** Python, FastAPI, SQLite, multi-provider LLM APIs, Docker/GHCR, GitHub Actions, Cloudflare
@@ -73,8 +73,8 @@ changes.
 ### [blackjack-rl](https://github.com/arda-basarici/blackjack-rl) — can RL rediscover provably-optimal decisions?
 
 A tabular agent audited against provable basic strategy (~93% of cells rediscovered,
-residual traced), then a DQN on the same task (~82–92% across seeds, gap isolated by
-ablation). A bet-sizer never finds Kelly, and the *why* is proven by two controlled
+residual traced), then a DQN on the same task (~82% naive, ~91% with a stabilizer stack,
+the cost located by ablation). A bet-sizer never finds Kelly, and the *why* is proven by two controlled
 experiments. The negative result is the published finding.
 
 **Covers:** reinforcement learning · experiment design & falsification · reproducibility
@@ -82,8 +82,8 @@ experiments. The negative result is the published finding.
 
 ### [pathfinding-ml](https://github.com/arda-basarici/pathfinding-ml) — can a learned heuristic beat Manhattan distance?
 
-A gradient-boosted cost-to-go heuristic: 17.3% fewer node expansions at a 0.2% mean
-optimality gap on held-out mazes, found on the far side of a Simpson's reversal that
+A gradient-boosted cost-to-go heuristic: at the report's 50/50 maze mix, 17.3% fewer node
+expansions at a 0.2% mean optimality gap on held-out mazes, found on the far side of a Simpson's reversal that
 made the pooled result look like a wash. Training-distribution composition, not the
 model, governs the outcome.
 
