@@ -26,7 +26,7 @@ claim carries its quoted evidence and the product cites its own measured accurac
 - **Grounding:** quotes verbatim-checked at write time and numerals at compose time:
   **0 non-verbatim quotes among 163,842 stored evidence spans**; residual attribution
   error measured (11.6%) and disclosed inside the product.
-- **Production, solo:** a 135,260-review census labelled for $3.80 · CI evaluation
+- **Production, solo:** a 135,260-review census labelled for $3.80 (one refusal logged) · CI evaluation
   gates · approval-gated deploys with rollback · per-report spend admission · public
   ops dashboard.
 
